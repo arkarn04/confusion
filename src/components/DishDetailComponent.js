@@ -3,12 +3,9 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap'
 import moment from 'moment'
 
 class DishDetail extends Component{
-    constructor(props){
-        super(props);
-    }
-
+    
     renderComments(commentsArray){
-        if(commentsArray.length != 0){
+        if(commentsArray.length !== 0){
             const comments = commentsArray.map((com) => {
                 
                 return(
@@ -19,10 +16,10 @@ class DishDetail extends Component{
                 )
             })
             return(
-                <div className="col-12 col-md-5 m-1">
-                    <h4>Comments</h4>
-                    {comments}
-                </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <h4>Comments</h4>
+                         {comments}
+                    </div>
             )
         }
         else{
@@ -33,22 +30,36 @@ class DishDetail extends Component{
     }
 
     render(){
-        return(
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    <Card>
-                        <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-                        <CardBody>
-                           <CardTitle>{this.props.dish.name}</CardTitle>
-                           <CardText>{this.props.dish.description}</CardText>
-                        </CardBody>
-                    </Card>
+
+        const { dish } = this.props;
+
+        if(dish != null){
+            return(
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <Card>
+                                <CardImg top src={dish.image} alt={dish.name} />
+                                <CardBody>
+                                   <CardTitle>{dish.name}</CardTitle>
+                                   <CardText>{dish.description}</CardText>
+                                </CardBody>
+                            </Card>
+                        </div>
+                        {this.renderComments(dish.comments)}
+                    </div>
                 </div>
                 
-                    {this.renderComments(this.props.dish.comments)}
-                
-            </div>
-        )
+            )
+        }
+        else{
+            return(
+                <div></div>
+            )
+        }
+        
+
+        
     }
 }
 
